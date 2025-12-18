@@ -17,9 +17,10 @@
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk)
 
 # Inherit some common Lineage stuff
-$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 # Inherit from platina device
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
@@ -27,7 +28,7 @@ $(call inherit-product, $(LOCAL_PATH)/device.mk)
 PRODUCT_BRAND := Xiaomi
 PRODUCT_DEVICE := platina
 PRODUCT_MANUFACTURER := Xiaomi
-PRODUCT_NAME := aosp_platina
+PRODUCT_NAME := lineage_platina
 PRODUCT_MODEL := MI 8 Lite
 TARGET_USES_AOSP_RECOVERY := true
 TARGET_INCLUDE_STOCK_ARCORE := false
@@ -37,6 +38,23 @@ TARGET_SUPPORTS_GOOGLE_RECORDER := false
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 TARGET_VENDOR_PRODUCT_NAME := platina
+
+# 开启 ADB 相关调试属性
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    ro.adb.secure=0 \
+    ro.debuggable=1 \
+    persist.sys.usb.config=adb \
+    persist.adb.tcp.port=5555 \
+    persist.service.adb.enable=1
+
+# 加入自定义adb 授权公钥
+PRODUCT_ADB_KEYS += build/shell/conf/chao.adbkey.pub
+
+# 移除 Google LatinIME
+PRODUCT_PACKAGES -= LatinIMEGoogle
+
+# 使用 AOSP LatinIME
+PRODUCT_PACKAGES += LatinIME
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="platina-user 10 QKQ1.190910.002 V12.0.3.0.QDTMIXM release-keys"
