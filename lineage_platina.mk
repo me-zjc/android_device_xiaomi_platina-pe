@@ -39,17 +39,6 @@ PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 TARGET_VENDOR_PRODUCT_NAME := platina
 
-# 开启 ADB 相关调试属性
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.adb.secure=0 \
-    ro.debuggable=1 \
-    persist.sys.usb.config=adb \
-    persist.adb.tcp.port=5555 \
-    persist.service.adb.enable=1
-
-# 加入自定义adb 授权公钥
-PRODUCT_ADB_KEYS += build/shell/conf/chao.adbkey.pub
-
 # 移除 Google LatinIME
 PRODUCT_PACKAGES -= LatinIMEGoogle
 
